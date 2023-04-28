@@ -5,8 +5,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
+Socket socket;
 
-        public String sendData(String input) {
+        public static String sendData(String input) {
             try {
                 Socket socket = new Socket("127.0.0.1", 5000);
                 PrintWriter socketWriter = new PrintWriter(socket.getOutputStream());
@@ -21,12 +22,16 @@ public class Client {
                 e.printStackTrace();
                 return("invalid connection");
             }
-
-
-
         }
+
+    public static void main(String[] args) {
+        System.out.println("hi");
+        sendData("2 + 2");
+
+
     }
-
-
-
 }
+
+
+
+
