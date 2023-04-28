@@ -26,7 +26,7 @@ Socket socket;
 
     public static void main(String[] args) {
         System.out.println("hi");
-        sendData("2 + 2");
+        sendData("A,Carter");
 
 
     }

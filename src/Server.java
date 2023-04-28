@@ -3,7 +3,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
     public class Server {
-
+        Model model;
         public static void main(String[] args) {
             double x;
             String op;
@@ -25,8 +25,20 @@ import java.net.Socket;
                             try {
                                 bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                                 PrintWriter printWriter = new PrintWriter(conn.getOutputStream());
-                                String data = bufferedReader.readLine();
-                                System.out.println(data);
+
+
+                                while(true){
+                                    String data = bufferedReader.readLine();
+                                    if(data.substring(0,1).equals("A")){
+                                        System.out.println(data.substring(0,1));
+                                        String[] dataArray = data.split(",");
+                                        String Username = dataArray[1];
+
+                                    }
+
+
+                                }
+
 
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
