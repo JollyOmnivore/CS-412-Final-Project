@@ -26,8 +26,9 @@ Socket socket;
 
     public static void main(String[] args) {
 
-        sendData("A,Jolly");
-
+        sendData("B,Jolly,100,1000");
+        // Auth script A,Name
+        // Bet script B,Name,100,1000
 
     }
 }

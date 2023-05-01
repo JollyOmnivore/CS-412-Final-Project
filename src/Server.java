@@ -40,6 +40,7 @@ import java.util.Random;
 
 
                                         else if (data.substring(0, 1).equals("B")) {
+
                                             System.out.println(data.substring(0, 1));
                                             String[] dataArray = data.split(",");
                                             String Username = dataArray[1];
