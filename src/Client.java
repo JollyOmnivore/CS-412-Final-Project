@@ -3,13 +3,34 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.UnknownHostException;
+
 
 public class Client {
-Socket socket;
+    View view = new View();
+    private Socket socket;
 
-        public static String sendData(String input) {
+
+        public void connect(){
             try {
-                Socket socket = new Socket("127.0.0.1", 5000);
+                socket = new Socket("127.0.0.1", 5000);
+                view.showAuth();
+                view.auth.setLoginButtonActionListener(new LoginListener());
+            }
+            catch (UnknownHostException e){
+                e.printStackTrace();
+                System.out.println("invalid connection");
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("invalid connection");
+            }
+
+        }
+        public String sendData(String input) {
+            try {
                 PrintWriter socketWriter = new PrintWriter(socket.getOutputStream());
                 socketWriter.println(input);
                 socketWriter.flush();
@@ -23,12 +44,30 @@ Socket socket;
                 return("invalid connection");
             }
         }
+        public class LoginListener implements ActionListener{
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendData("A,"+view.auth.getUser());
+            }
+        }
+
+
 
     public static void main(String[] args) {
+        Client client = new Client();
+        client.connect();
 
-        sendData("B,Jolly,100,1000");
-        // Auth script A,Name
+
+
+
+
+
+            //String balance = sendData("A,Jolly");
+        //System.out.println(balance);
+        //balance  = sendData("B,Jolly,100,"+ balance);
         // Bet script B,Name,100,1000
+        //System.out.println(balance);
 
     }
 }

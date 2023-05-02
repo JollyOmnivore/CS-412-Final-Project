@@ -25,7 +25,7 @@ import java.util.Random;
                             BufferedReader bufferedReader;
                             try {
                                 bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                                PrintWriter printWriter = new PrintWriter(conn.getOutputStream());
+                                PrintWriter printWriter = new PrintWriter(conn.getOutputStream(), true);
 
 
                                 while(true){
@@ -36,6 +36,8 @@ import java.util.Random;
                                             String[] dataArray = data.split(",");
                                             String Username = dataArray[1];
                                             int userBalance = Model.Auth(Username);
+                                            System.out.println(userBalance);
+                                            printWriter.println(userBalance);
                                         }
 
 
@@ -57,13 +59,14 @@ import java.util.Random;
                                             if (result == 0) {
                                                 balance = balance + betAmount;
                                                 System.out.println("You flipped Heads! you win");
+                                                printWriter.println(balance);
                                             }
                                             else {
                                                 balance -= betAmount;
                                                 System.out.println("You flipped Tails! you lose");
+                                                printWriter.println(balance);
                                             }
 
-                                            Model.Bet(Username,balance);
 
                                         }
                                     }
