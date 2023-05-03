@@ -12,7 +12,7 @@ Auth auth = new Auth();
 Bet bet = new Bet();
 
 public View() {
-    jFrame.setSize(500, 500);
+    jFrame.setSize(600, 500);
     jFrame.setVisible(true);
 }
 

@@ -75,7 +75,6 @@ public class Client {
 
         public void setLeaderboard(String line) {
             if (line.substring(0, 1).equals("L")) {
-                System.out.println(line);
                 line = line.substring(1);
                 view.bet.setLeaderboardList(line);
             } else {
@@ -89,11 +88,11 @@ public class Client {
                 public void run() {
                     while(true) {
                         try {
-                            Thread.sleep(5000); // sleep for 5 seconds
+                            Thread.sleep(1000); // sleep for 5 seconds
                             String leaderboard;
                             leaderboard = sendData("L");
                             setLeaderboard(leaderboard);
-                            System.out.println(leaderboard);
+
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
