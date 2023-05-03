@@ -88,6 +88,50 @@ public static void Createdb() {
 
 
 
+    public static String LeaderBoard() {
+        StringBuilder leaderboardData = new StringBuilder();
+        Connection connection = null;
+        try {
+            // Connect to the database
+            connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+
+            // Create a statement
+            Statement statement = connection.createStatement();
+
+            // Execute the query to select the top 4 balances
+            ResultSet resultSet = statement.executeQuery("SELECT username, balance FROM GameData ORDER BY balance DESC LIMIT 4");
+
+            // Loop through the result set and add each username and balance to the leaderboardData string
+            while (resultSet.next()) {
+                String username = resultSet.getString("username");
+                int balance = resultSet.getInt("balance");
+                leaderboardData.append(username).append(": $").append(balance).append(",");
+            }
+
+            // Remove the trailing comma and space from the string
+            if (leaderboardData.length() > 0) {
+                leaderboardData.setLength(leaderboardData.length() - 2);
+            }
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            statement.close();
+
+        }
+         catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return leaderboardData.toString();
+    }
+
+
+
+
+
+
+
+
 
 
 

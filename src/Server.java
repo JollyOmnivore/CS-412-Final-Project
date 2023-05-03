@@ -1,15 +1,17 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Random;
     public class Server {
+
         Model model;
         public static void main(String[] args) {
             double x;
             String op;
             double y;
             String answer;
-
+            ArrayList<Socket> socketRecord = new ArrayList<>();
 
             try {
                 ServerSocket serverSocket = new ServerSocket(5000);
@@ -17,19 +19,35 @@ import java.util.Random;
                     Model.Createdb();
                     System.out.println("SERVER: waiting for client...");
                     Socket conn = serverSocket.accept();
+                    socketRecord.add(conn);
+//                    Thread LeaderThread = new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            for (Socket socket:socketRecord) {
+//                                try {
+//                                    PrintWriter LeaderWriter = new PrintWriter(socket.getOutputStream(), true);
+//                                    LeaderWriter.println("L"+Model.LeaderBoard());
+//                                    LeaderWriter.flush();
+//                                } catch (IOException e) {
+//                                    throw new RuntimeException("Client Disconnected from Server");
+//
+//                                }
+//                            }
+//                        }
+//                    });
                     System.out.println("New Client connected");
                     Thread thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
 
-                            BufferedReader bufferedReader;
                             try {
-                                bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                                 PrintWriter printWriter = new PrintWriter(conn.getOutputStream(), true);
 
 
                                 while(true){
                                     try {
+
                                         String data = bufferedReader.readLine();
                                         if (data.substring(0, 1).equals("A")) {
                                             System.out.println(data.substring(0, 1));
@@ -60,16 +78,26 @@ import java.util.Random;
                                                 balance = balance + betAmount;
                                                 System.out.println("You flipped Heads! you win");
                                                 printWriter.println(balance);
+                                                Model.Bet(Username,balance);
+
                                             }
                                             else {
                                                 balance -= betAmount;
                                                 System.out.println("You flipped Tails! you lose");
                                                 printWriter.println(balance);
+                                                Model.Bet(Username,balance);
                                             }
 
 
+
                                         }
+
+
+
+
                                     }
+
+
                                     catch (IOException e){
                                         throw new RuntimeException("Client Disconnected from Server");
                                     }

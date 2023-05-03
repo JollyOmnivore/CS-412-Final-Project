@@ -10,6 +10,9 @@ import java.net.UnknownHostException;
 
 public class Client {
     View view = new View();
+    int balance = 0;
+    BufferedReader socketReader;
+    String username;
     private Socket socket;
 
 
@@ -34,9 +37,9 @@ public class Client {
                 PrintWriter socketWriter = new PrintWriter(socket.getOutputStream());
                 socketWriter.println(input);
                 socketWriter.flush();
-
-                BufferedReader socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String line = socketReader.readLine();
+                //setLeaderboard(line);
                 return line;
 
             } catch (IOException e) {
@@ -48,9 +51,37 @@ public class Client {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendData("A,"+view.auth.getUser());
+                username = view.auth.getUser();
+                String StrBalance = sendData("A,"+view.auth.getUser());
+                balance = Integer.parseInt(StrBalance);
+                System.out.println("open bet screen");
+                view.showBet();
+                view.bet.setFlipButtonActionListener(new flipButton());
+                view.bet.setBalance(balance);
             }
         }
+        public class flipButton implements ActionListener{
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(balance);
+                int betAmount = view.bet.getBetAmount();
+                String sendBet = "B," + username+ "," + betAmount + "," + balance ;
+                System.out.println(sendBet);
+                balance = Integer.parseInt(sendData(sendBet));
+                view.bet.setBalance(balance);
+            }
+        }
+
+//        public void setLeaderboard(String line) {
+//            while (true) {
+//                if (line.substring(0, 1).equals("L")) {
+//                    System.out.println(line);
+//                }
+//                else{
+//
+//                }
+//            }
+//        }
 
 
 
@@ -58,16 +89,6 @@ public class Client {
         Client client = new Client();
         client.connect();
 
-
-
-
-
-
-            //String balance = sendData("A,Jolly");
-        //System.out.println(balance);
-        //balance  = sendData("B,Jolly,100,"+ balance);
-        // Bet script B,Name,100,1000
-        //System.out.println(balance);
 
     }
 }
