@@ -116,7 +116,12 @@ public class Bet{
         return betAmount;
     }
 
+    public void setLeaderboardList(String people){
+        String[] dataArray = people.split(",");
+        leaderboardList.setListData(dataArray);
 
+
+    }
 
 
 }

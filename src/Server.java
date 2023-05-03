@@ -23,14 +23,16 @@ import java.util.Random;
 //                    Thread LeaderThread = new Thread(new Runnable() {
 //                        @Override
 //                        public void run() {
-//                            for (Socket socket:socketRecord) {
-//                                try {
-//                                    PrintWriter LeaderWriter = new PrintWriter(socket.getOutputStream(), true);
-//                                    LeaderWriter.println("L"+Model.LeaderBoard());
-//                                    LeaderWriter.flush();
-//                                } catch (IOException e) {
-//                                    throw new RuntimeException("Client Disconnected from Server");
+//                            while (true) {
+//                                for (Socket socket : socketRecord) {
+//                                    try {
+//                                        PrintWriter LeaderWriter = new PrintWriter(socket.getOutputStream(), true);
+//                                        LeaderWriter.println("L" + Model.LeaderBoard());
+//                                        LeaderWriter.flush();
+//                                    } catch (IOException e) {
+//                                        throw new RuntimeException("Client Disconnected from Server");
 //
+//                                    }
 //                                }
 //                            }
 //                        }
@@ -90,6 +92,10 @@ import java.util.Random;
 
 
 
+                                        }
+                                        else if(data.substring(0, 1).equals("L")) {
+                                            System.out.println("grabbing leaderboard data");
+                                            printWriter.println("L" + Model.LeaderBoard());
                                         }
 
 

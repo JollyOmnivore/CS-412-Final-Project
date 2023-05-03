@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 
 
 public class Client {
+    String line;
     View view = new View();
     int balance = 0;
     BufferedReader socketReader;
@@ -38,8 +39,8 @@ public class Client {
                 socketWriter.println(input);
                 socketWriter.flush();
                 socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String line = socketReader.readLine();
-                //setLeaderboard(line);
+                line = socketReader.readLine();
+                setLeaderboard(line);
                 return line;
 
             } catch (IOException e) {
@@ -72,24 +73,42 @@ public class Client {
             }
         }
 
-//        public void setLeaderboard(String line) {
-//            while (true) {
-//                if (line.substring(0, 1).equals("L")) {
-//                    System.out.println(line);
-//                }
-//                else{
-//
-//                }
-//            }
-//        }
+        public void setLeaderboard(String line) {
+            if (line.substring(0, 1).equals("L")) {
+                System.out.println(line);
+                line = line.substring(1);
+                view.bet.setLeaderboardList(line);
+            } else {
 
+            }
+        }
+
+        public void updater(){
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(true) {
+                        try {
+                            Thread.sleep(5000); // sleep for 5 seconds
+                            String leaderboard;
+                            leaderboard = sendData("L");
+                            setLeaderboard(leaderboard);
+                            System.out.println(leaderboard);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }
+            });
+            thread.start();
+        }
 
 
     public static void main(String[] args) {
         Client client = new Client();
         client.connect();
-
-
+        client.updater();
     }
 }
 
