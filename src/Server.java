@@ -95,7 +95,7 @@ import java.util.Random;
                                         }
                                         else if(data.substring(0, 1).equals("L")) {
                                             System.out.println("grabbing leaderboard data");
-                                            printWriter.println("L" + Model.LeaderBoard());
+                                            printWriter.println("L" + Model.LeaderBoard()+"0");
                                         }
 
 

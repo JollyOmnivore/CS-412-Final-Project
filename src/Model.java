@@ -99,7 +99,7 @@ public static void Createdb() {
             Statement statement = connection.createStatement();
 
             // Execute the query to select the top 4 balances
-            ResultSet resultSet = statement.executeQuery("SELECT username, balance FROM GameData ORDER BY balance DESC LIMIT 4");
+            ResultSet resultSet = statement.executeQuery("SELECT username, balance FROM GameData ORDER BY balance DESC LIMIT 3");
 
             // Loop through the result set and add each username and balance to the leaderboardData string
             while (resultSet.next()) {

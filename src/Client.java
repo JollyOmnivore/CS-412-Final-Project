@@ -88,7 +88,7 @@ public class Client {
                 public void run() {
                     while(true) {
                         try {
-                            Thread.sleep(1000); // sleep for 5 seconds
+                            Thread.sleep(1000);
                             String leaderboard;
                             leaderboard = sendData("L");
                             setLeaderboard(leaderboard);
